@@ -4,6 +4,10 @@ import kotlin.math.pow
 
 typealias Matrix = MutableList<MutableList<Double>>
 
+/**
+ * Control loop and entrypouint.
+ *
+ */
 fun main() {
 
     while (true) {
@@ -40,6 +44,10 @@ fun main() {
 
 }
 
+/**
+ * Propmpts for two matrices and adds them to another.
+ *
+ */
 fun addMatrices() {
     println("Enter matrix size:")
     val (rowsA, colsA) = readln().split(" ").map { it.toInt() }
@@ -65,6 +73,9 @@ fun addMatrices() {
 
 }
 
+/**
+ * Prompts for a matrix and a scalar and performs a scalar multiplication.
+ */
 fun multiplyMatricesByConstant() {
 
     println("Enter matrix size:")
@@ -82,6 +93,10 @@ fun multiplyMatricesByConstant() {
     result.print()
 }
 
+/**
+ * Prompts for two matrices and multiplies them.
+ *
+ */
 fun multiplyMatrices() {
     println("Enter matrix size:")
     val (rowsA, colsA) = readln().split(" ").map { it.toInt() }
@@ -107,6 +122,10 @@ fun multiplyMatrices() {
     result.print()
 }
 
+/**
+ * Prompts for a matrix and transposes it.
+ *
+ */
 fun transposeMatrix() {
 
     println("1. Main diagonal")
@@ -136,6 +155,10 @@ fun transposeMatrix() {
     result.print()
 }
 
+/**
+ * Prompts for a matrix and calculates the determinant.
+ *
+ */
 fun calculateDeterminant() {
     println("Enter matrix size:")
     val (rowsA, colsA) = readln().split(" ").map { it.toInt() }
@@ -149,6 +172,10 @@ fun calculateDeterminant() {
     println(matrixA.determinant())
 }
 
+/**
+ * Prompts a matrix and calculates its inverse matrix.
+ *
+ */
 fun inverseMatrix() {
     println("Enter matrix size:")
     val (rowsA, colsA) = readln().split(" ").map { it.toInt() }
@@ -170,7 +197,12 @@ fun inverseMatrix() {
 
 }
 
-
+/**
+ * Sum a matrix to the current matrix instance.
+ *
+ * @param other matrix
+ * @return sum of matrices
+ */
 fun Matrix.sum(other: Matrix): Matrix {
     val result = MutableList(this.size) { MutableList(this.first().size) { 0.0 } }
 
@@ -183,6 +215,12 @@ fun Matrix.sum(other: Matrix): Matrix {
     return result
 }
 
+/**
+ * Multiply a matrix to the current matrix instance.
+ *
+ * @param other matrix
+ * @return product of the matrices
+ */
 fun Matrix.multiply(other: Matrix): Matrix {
     val result = MutableList(this.size) { MutableList(other.first().size) { 0.0 } }
     for (i in this.indices) {
@@ -195,6 +233,12 @@ fun Matrix.multiply(other: Matrix): Matrix {
     return result
 }
 
+/**
+ * Multiply a scalar to the current matrix instance.
+ *
+ * @param scalar scalar
+ * @return product of the matrix and the scalar
+ */
 fun Matrix.multiplyByConstant(scalar: Double): Matrix {
     val result = MutableList(this.size) { MutableList(this.first().size) { 0.0 } }
 
@@ -206,6 +250,11 @@ fun Matrix.multiplyByConstant(scalar: Double): Matrix {
     return result
 }
 
+/**
+ * Transpose a matrix instance on the main diagonal.
+ *
+ * @return transposed matrix
+ */
 fun Matrix.transposeMainDiagonal(): Matrix {
     val result = MutableList(this.size) { MutableList(this.first().size) { 0.0 } }
 
@@ -218,6 +267,11 @@ fun Matrix.transposeMainDiagonal(): Matrix {
     return result
 }
 
+/**
+ * Transpose a matrix instance on the side diagonal.
+ *
+ * @return transposed matrix
+ */
 fun Matrix.transposeSideDiagonal(): Matrix {
     val result = MutableList(this.size) { MutableList(this.first().size) { 0.0 } }
 
@@ -230,6 +284,11 @@ fun Matrix.transposeSideDiagonal(): Matrix {
     return result
 }
 
+/**
+ * Transpose a matrix instance on the vertical line.
+ *
+ * @return transposed matrix
+ */
 fun Matrix.transposeVerticalLine(): Matrix {
     val result = MutableList(this.size) { MutableList(this.first().size) { 0.0 } }
 
@@ -242,6 +301,11 @@ fun Matrix.transposeVerticalLine(): Matrix {
     return result
 }
 
+/**
+ * Transpose a matrix instance on the horizontal line.
+ *
+ * @return transposed matrix
+ */
 fun Matrix.transposeHorizontalLine(): Matrix {
     val result = MutableList(this.size) { MutableList(this.first().size) { 0.0 } }
 
@@ -254,6 +318,13 @@ fun Matrix.transposeHorizontalLine(): Matrix {
     return result
 }
 
+/**
+ * Calculate the minor of the matrix.
+ *
+ * @param i row to drop
+ * @param j column to drop
+ * @return minor of the matrix
+ */
 fun Matrix.minor(i: Int, j: Int): Matrix {
     val result = MutableList(this.size) { MutableList(this.first().size) { 0.0 } }
 
@@ -273,6 +344,11 @@ fun Matrix.minor(i: Int, j: Int): Matrix {
     return result
 }
 
+/**
+ * Determinant of the current matrix instance.
+ *
+ * @return determinant
+ */
 fun Matrix.determinant(): Double {
 
     assert(this.size == this.first().size)
@@ -292,7 +368,12 @@ fun Matrix.determinant(): Double {
     return result
 }
 
-fun Matrix.adjacent(): Matrix {
+/**
+ * Cofactors of the matrix instance.
+ *
+ * @return cofactors
+ */
+fun Matrix.cofactors(): Matrix {
 
     assert(this.size == this.first().size)
 
@@ -309,13 +390,21 @@ fun Matrix.adjacent(): Matrix {
     return result
 }
 
+/**
+ * Inverse of the matrix instance
+ *
+ * @return inverse
+ */
 fun Matrix.inverse(): Matrix {
 
     assert(this.size == this.first().size)
-    return this.adjacent().transposeMainDiagonal().multiplyByConstant(1.0 / this.determinant())
+    return this.cofactors().transposeMainDiagonal().multiplyByConstant(1.0 / this.determinant())
 }
 
-
+/**
+ * Prints a matrix in a readable format.
+ *
+ */
 fun Matrix.print() {
     this.forEach { row -> println(row.joinToString(" ")) }
 }
